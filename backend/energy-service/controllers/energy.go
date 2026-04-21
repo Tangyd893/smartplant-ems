@@ -3,8 +3,6 @@ package controllers
 import (
 	"fmt"
 	"strconv"
-	"time"
-
 	"github.com/beego/beego/v2/server/web"
 )
 
@@ -12,115 +10,66 @@ type EnergyController struct {
 	web.Controller
 }
 
-type EnergyRecord struct {
-	ID         int64     `json:"id"`
-	DeviceID   int64     `json:"device_id"`
-	RecordTime time.Time `json:"record_time"`
-	PowerKW    float64   `json:"power_kw"`
-	EnergyKWH  float64   `json:"energy_kwh"`
-	VoltageV   float64   `json:"voltage_v"`
-	CurrentA   float64   `json:"current_a"`
-}
-
-type PageResult struct {
-	Records interface{} `json:"records"`
-	Total   int64       `json:"total"`
-	Page    int         `json:"page"`
-	Size    int         `json:"size"`
-}
-
-type APIResponse struct {
-	Code int         `json:"code"`
-	Msg  string      `json:"msg"`
-	Data interface{} `json:"data,omitempty"`
-}
-
 func (c *EnergyController) List() {
 	page, _ := strconv.Atoi(c.GetString("page", "1"))
 	size, _ := strconv.Atoi(c.GetString("size", "20"))
-	deviceID := c.GetString("device_id")
-	startDate := c.GetString("start_date")
-	endDate := c.GetString("end_date")
 
-	fmt.Printf("List energy records: page=%d, size=%d, device=%s, start=%s, end=%s\n", page, size, deviceID, startDate, endDate)
-
-	records := []EnergyRecord{
-		{ID: 1, DeviceID: 1, RecordTime: time.Now(), PowerKW: 125.5, EnergyKWH: 125.5, VoltageV: 380.2, CurrentA: 190.3},
-		{ID: 2, DeviceID: 2, RecordTime: time.Now(), PowerKW: 75.2, EnergyKWH: 75.2, VoltageV: 380.1, CurrentA: 110.5},
+	records := []map[string]interface{}{
+		{"id": 1, "device_id": 1, "record_time": "2026-04-21T10:00:00+08:00", "power_kw": 125.5, "energy_kwh": 38520.5, "voltage_v": 380.2, "current_a": 190.3},
+		{"id": 2, "device_id": 2, "record_time": "2026-04-21T10:00:00+08:00", "power_kw": 118.2, "energy_kwh": 36210.3, "voltage_v": 379.8, "current_a": 180.5},
 	}
 
-	c.Data["json"] = APIResponse{
-		Code: 0,
-		Msg:  "success",
-		Data: PageResult{
-			Records: records,
-			Total:   2,
-			Page:    page,
-			Size:    size,
+	c.Data["json"] = map[string]interface{}{
+		"code": 0,
+		"msg":  "success",
+		"data": map[string]interface{}{
+			"records": records,
+			"total":   2,
+			"page":    page,
+			"size":    size,
 		},
 	}
 	c.ServeJSON()
 }
 
 func (c *EnergyController) Get() {
-	id, _ := strconv.ParseInt(c.Ctx.Input.Param(":id"), 10, 64)
-	fmt.Printf("Get energy record: id=%d\n", id)
-
-	c.Data["json"] = APIResponse{
-		Code: 0,
-		Msg:  "success",
-		Data: EnergyRecord{ID: id, DeviceID: 1, RecordTime: time.Now(), PowerKW: 125.5, EnergyKWH: 125.5, VoltageV: 380.2, CurrentA: 190.3},
+	id := c.Ctx.Input.Param(":id")
+	record := map[string]interface{}{
+		"id": 1, "device_id": 1, "record_time": "2026-04-21T10:00:00+08:00",
+		"power_kw": 125.5, "energy_kwh": 38520.5, "voltage_v": 380.2, "current_a": 190.3,
 	}
+	_ = id
+	c.Data["json"] = map[string]interface{}{"code": 0, "msg": "success", "data": record}
 	c.ServeJSON()
 }
 
 func (c *EnergyController) Create() {
 	var req map[string]interface{}
-	if err := c.ParseForm(&req); err != nil {
-		c.Data["json"] = APIResponse{Code: 400, Msg: "参数错误"}
-		c.ServeJSON()
-		return
-	}
-
-	fmt.Printf("Create energy record: %+v\n", req)
-
-	c.Data["json"] = APIResponse{
-		Code: 0,
-		Msg:  "创建成功",
-		Data: map[string]interface{}{"id": 3},
-	}
+	c.ParseForm(&req)
+	fmt.Printf("创建能耗记录: %+v\n", req)
+	c.Data["json"] = map[string]interface{}{"code": 0, "msg": "创建成功", "data": map[string]interface{}{"id": 10}}
 	c.ServeJSON()
 }
 
 func (c *EnergyController) Update() {
+	id := c.Ctx.Input.Param(":id")
 	var req map[string]interface{}
-	if err := c.ParseForm(&req); err != nil {
-		c.Data["json"] = APIResponse{Code: 400, Msg: "参数错误"}
-		c.ServeJSON()
-		return
-	}
-
-	fmt.Printf("Update energy record: %+v\n", req)
-
-	c.Data["json"] = APIResponse{Code: 0, Msg: "更新成功"}
+	c.ParseForm(&req)
+	fmt.Printf("更新能耗记录 id=%s: %+v\n", id, req)
+	c.Data["json"] = map[string]interface{}{"code": 0, "msg": "更新成功"}
 	c.ServeJSON()
 }
 
 func (c *EnergyController) Delete() {
-	id, _ := strconv.ParseInt(c.Ctx.Input.Param(":id"), 10, 64)
-	fmt.Printf("Delete energy record: id=%d\n", id)
-
-	c.Data["json"] = APIResponse{Code: 0, Msg: "删除成功"}
+	id := c.Ctx.Input.Param(":id")
+	fmt.Printf("删除能耗记录: id=%s\n", id)
+	c.Data["json"] = map[string]interface{}{"code": 0, "msg": "删除成功"}
 	c.ServeJSON()
 }
 
 func (c *EnergyController) GetStats() {
 	period := c.GetString("period", "day")
-	deviceID := c.GetString("device_id")
-
-	fmt.Printf("Get energy stats: period=%s, device=%s\n", period, deviceID)
-
-	stats := map[string]interface{}{
+	data := map[string]interface{}{
 		"total_energy_kwh": 15420.5,
 		"avg_power_kw":     125.3,
 		"max_power_kw":     185.6,
@@ -130,7 +79,6 @@ func (c *EnergyController) GetStats() {
 		"off_peak_hours":   19,
 		"period":           period,
 	}
-
-	c.Data["json"] = APIResponse{Code: 0, Msg: "success", Data: stats}
+	c.Data["json"] = map[string]interface{}{"code": 0, "msg": "success", "data": data}
 	c.ServeJSON()
 }
