@@ -1,6 +1,20 @@
 import { useState, useEffect } from 'react'
+<<<<<<< HEAD
 import { reportAPI } from '@/api/report'
 import type { Report } from '@/api/types/report'
+=======
+import axios from 'axios'
+
+interface Report {
+  id: number
+  report_name: string
+  report_type: string
+  period_type: string
+  period_start: string
+  period_end: string
+  status: number
+}
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
 
 const REPORT_TYPE_MAP: Record<string, string> = {
   daily: '日报表',
@@ -13,16 +27,23 @@ export default function Reports() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+<<<<<<< HEAD
     reportAPI.list({ page: 1, size: 50 })
       .then(res => {
         if (res.code === 0 && res.data) {
           setReports(res.data.records || [])
         }
+=======
+    axios.get('/api/report/list?page=1&size=50')
+      .then(res => {
+        setReports(res.data?.data?.records || [])
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
         setLoading(false)
       })
       .catch(() => setLoading(false))
   }, [])
 
+<<<<<<< HEAD
   const handleDownload = (id: number) => {
     reportAPI.download(id)
       .then(response => {
@@ -39,6 +60,8 @@ export default function Reports() {
       })
   }
 
+=======
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
   return (
     <div>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
@@ -78,11 +101,15 @@ export default function Reports() {
                     </span>
                   </td>
                   <td>
+<<<<<<< HEAD
                     <button
                       className="btn btn-secondary"
                       style={{ fontSize: '0.8rem', padding: '0.25rem 0.75rem', marginRight: '0.5rem' }}
                       onClick={() => handleDownload(r.id)}
                     >
+=======
+                    <button className="btn btn-secondary" style={{ fontSize: '0.8rem', padding: '0.25rem 0.75rem', marginRight: '0.5rem' }}>
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
                       下载
                     </button>
                     <button className="btn btn-secondary" style={{ fontSize: '0.8rem', padding: '0.25rem 0.75rem', color: 'var(--danger)' }}>

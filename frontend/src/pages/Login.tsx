@@ -1,9 +1,13 @@
 import { useState } from 'react'
+<<<<<<< HEAD
 import { authAPI } from '../api'
+=======
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
 
 export default function Login() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+<<<<<<< HEAD
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
 
@@ -25,6 +29,16 @@ export default function Login() {
       setError(err instanceof Error ? err.message : '网络请求失败')
     } finally {
       setLoading(false)
+=======
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (username === 'admin' && password === 'admin123') {
+      localStorage.setItem('token', 'mock-token-123')
+      window.location.href = '/dashboard'
+    } else {
+      alert('用户名或密码错误')
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
     }
   }
 
@@ -36,11 +50,14 @@ export default function Login() {
           <h1 style={{ fontSize: '1.25rem', fontWeight: 600 }}>SmartPlant EMS</h1>
           <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>智慧工厂能源管理系统</p>
         </div>
+<<<<<<< HEAD
         {error && (
           <div style={{ padding: '0.75rem', marginBottom: '1rem', background: '#fee2e2', borderRadius: '6px', color: '#dc2626', fontSize: '0.875rem' }}>
             {error}
           </div>
         )}
+=======
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
         <form onSubmit={handleSubmit}>
           <div style={{ marginBottom: '1rem' }}>
             <label style={{ display: 'block', fontSize: '0.85rem', marginBottom: '0.375rem', color: 'var(--text-secondary)' }}>用户名</label>
@@ -48,7 +65,10 @@ export default function Login() {
               type="text"
               value={username}
               onChange={e => setUsername(e.target.value)}
+<<<<<<< HEAD
               disabled={loading}
+=======
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
               style={{ width: '100%', padding: '0.5rem 0.75rem', border: '1px solid var(--border)', borderRadius: '6px', fontSize: '0.9rem' }}
             />
           </div>
@@ -58,12 +78,20 @@ export default function Login() {
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
+<<<<<<< HEAD
               disabled={loading}
               style={{ width: '100%', padding: '0.5rem 0.75rem', border: '1px solid var(--border)', borderRadius: '6px', fontSize: '0.9rem' }}
             />
           </div>
           <button type="submit" className="btn btn-primary" style={{ width: '100%' }} disabled={loading}>
             {loading ? '登录中...' : '登录'}
+=======
+              style={{ width: '100%', padding: '0.5rem 0.75rem', border: '1px solid var(--border)', borderRadius: '6px', fontSize: '0.9rem' }}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary" style={{ width: '100%' }}>
+            登录
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
           </button>
         </form>
         <p style={{ marginTop: '1rem', fontSize: '0.75rem', color: 'var(--text-muted)', textAlign: 'center' }}>

@@ -1,6 +1,7 @@
 package main
 
 import (
+<<<<<<< HEAD
 	"log"
 
 	_ "smartplant-ems/energy-service/routers"
@@ -29,6 +30,12 @@ func init() {
 	orm.SetMaxOpenConns("default", config.GetMaxOpenConns())
 }
 
+=======
+	_ "smartplant-ems/energy-service/routers"
+	"github.com/beego/beego/v2/server/web"
+)
+
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
 func main() {
 	web.Run()
 }

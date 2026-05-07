@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+<<<<<<< HEAD
 type Report struct {
 	ID          int64     `orm:"auto" json:"id"`
 	ReportName  string    `orm:"size(128)" json:"report_name"`
@@ -46,6 +47,34 @@ type ReportCreate struct {
 	PeriodType  string `json:"period_type" valid:"Required"`
 	PeriodStart string `json:"period_start" valid:"Required"`
 	PeriodEnd   string `json:"period_end" valid:"Required"`
+=======
+type Device struct {
+	ID           int64     `json:"id"`
+	DeviceCode   string    `json:"device_code"`
+	DeviceName   string    `json:"device_name"`
+	DeviceType   string    `json:"device_type"`
+	Location     string    `json:"location"`
+	Status       int       `json:"status"`
+	PowerRating  float64   `json:"power_rating"`
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
+}
+
+type DeviceCreate struct {
+	DeviceCode  string  `json:"device_code" valid:"Required"`
+	DeviceName  string  `json:"device_name" valid:"Required"`
+	DeviceType  string  `json:"device_type" valid:"Required"`
+	Location    string  `json:"location"`
+	PowerRating float64 `json:"power_rating"`
+}
+
+type DeviceUpdate struct {
+	ID          int64   `json:"id" valid:"Required"`
+	DeviceName  string  `json:"device_name"`
+	Location    string  `json:"location"`
+	Status      int     `json:"status"`
+	PowerRating float64 `json:"power_rating"`
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
 }
 
 type PageResult struct {
@@ -53,4 +82,13 @@ type PageResult struct {
 	Total   int64       `json:"total"`
 	Page    int         `json:"page"`
 	Size    int         `json:"size"`
+<<<<<<< HEAD
+=======
+}
+
+type APIResponse struct {
+	Code int         `json:"code"`
+	Msg  string      `json:"msg"`
+	Data interface{} `json:"data,omitempty"`
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
 }

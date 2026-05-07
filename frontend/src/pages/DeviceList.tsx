@@ -1,7 +1,21 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+<<<<<<< HEAD
 import { deviceAPI } from '@/api/device'
 import type { Device } from '@/api/types/device'
+=======
+import axios from 'axios'
+
+interface Device {
+  id: number
+  device_code: string
+  device_name: string
+  device_type: string
+  location: string
+  status: number
+  power_rating: number
+}
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
 
 const DEVICE_TYPE_MAP: Record<string, string> = {
   air_compressor: '空压机',
@@ -21,11 +35,17 @@ export default function DeviceList() {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+<<<<<<< HEAD
     deviceAPI.list({ page: 1, size: 50 })
       .then(res => {
         if (res.code === 0 && res.data) {
           setDevices(res.data.records || [])
         }
+=======
+    axios.get('/api/device/list?page=1&size=50')
+      .then(res => {
+        setDevices(res.data?.data?.records || [])
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
         setLoading(false)
       })
       .catch(() => setLoading(false))

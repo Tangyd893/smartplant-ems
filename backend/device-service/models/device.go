@@ -5,6 +5,7 @@ import (
 )
 
 type Device struct {
+<<<<<<< HEAD
 	ID          int64     `orm:"auto" json:"id"`
 	DeviceCode  string    `orm:"size(64);unique" json:"device_code"`
 	DeviceName  string    `orm:"size(128)" json:"device_name"`
@@ -35,6 +36,17 @@ type User struct {
 
 func (u *User) TableName() string {
 	return "users"
+=======
+	ID           int64     `json:"id"`
+	DeviceCode   string    `json:"device_code"`
+	DeviceName   string    `json:"device_name"`
+	DeviceType   string    `json:"device_type"`
+	Location     string    `json:"location"`
+	Status       int       `json:"status"`
+	PowerRating  float64   `json:"power_rating"`
+	CreatedAt    time.Time `json:"created_at"`
+	UpdatedAt    time.Time `json:"updated_at"`
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
 }
 
 type DeviceCreate struct {
@@ -58,4 +70,13 @@ type PageResult struct {
 	Total   int64       `json:"total"`
 	Page    int         `json:"page"`
 	Size    int         `json:"size"`
+<<<<<<< HEAD
+=======
+}
+
+type APIResponse struct {
+	Code int         `json:"code"`
+	Msg  string      `json:"msg"`
+	Data interface{} `json:"data,omitempty"`
+>>>>>>> 395aa7cad5570b4b699b4c029768d04fab946652
 }
